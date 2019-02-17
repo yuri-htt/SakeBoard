@@ -1,3 +1,57 @@
 {
-    "extends": "airbnb"
-}
+    "extends": "airbnb",
+    "env": {
+      "browser": true,
+      "node": true,
+      "es6": true,
+      "jest": true
+    },
+    "parser": "babel-eslint",
+    "plugins": [
+      "react"
+    ],
+    "globals": {
+      "__DEV__": false
+    },
+    "rules": {
+      "react/jsx-filename-extension": ["off"],
+      "react/prop-types": ["off"],
+      "react/forbid-prop-types": ["off"],
+      "react/require-default-props": ["off"],
+      "react/sort-comp": ["off"],
+      "class-methods-use-this": ["off"],
+      "no-use-before-define": ["off"],
+      "import/no-extraneous-dependencies": ["error", {"devDependencies": true }],
+      "max-len": ["off"],
+      "no-shadow": ["off"],
+      "no-nested-ternary": ["off"],
+      "no-plusplus": ["off"],
+      "no-multi-assign": ["off"],
+      "global-require": ["off"],
+      "import/no-named-as-default": ["off"],
+      "no-underscore-dangle": ["off"],
+      "no-mixed-operators": [
+          "error",
+          {
+              "groups": [
+                  ["&", "|", "^", "~", "<<", ">>", ">>>"],
+                  ["==", "!=", "===", "!==", ">", ">=", "<", "<="],
+                  ["&&", "||"],
+                  ["in", "instanceof"]
+              ],
+              "allowSamePrecedence": true
+          }
+      ],
+      "react/destructuring-assignment": ["off"],
+      "react/jsx-one-expression-per-line": ["error", { "allow": "single-child" }],
+      "react/no-this-in-sfc": ["off"]
+    },
+    "settings": {
+      "import/resolver": {
+        "node": {
+          "extensions": [".js", ".ios.js", ".android.js"],
+          "moduleDirectory": ["node_modules", "__mocks__"]
+        }
+      }
+    }
+  }
