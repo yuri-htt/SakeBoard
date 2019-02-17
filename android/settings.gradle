@@ -1,0 +1,3 @@
+rootProject.name = 'SakeBoard'
+
+include ':app'
