@@ -8,10 +8,13 @@
   },
   "dependencies": {
     "react": "16.6.3",
-    "react-native": "0.58.4"
+    "react-native": "0.58.4",
+    "react-navigation": "^2.18.0",
+    "react-navigation-tabs": "0.6.0"
   },
   "devDependencies": {
     "babel-core": "^7.0.0-bridge.0",
+    "babel-eslint": "^10.0.1",
     "babel-jest": "24.1.0",
     "eslint": "^5.14.0",
     "eslint-config-airbnb": "^17.1.0",
