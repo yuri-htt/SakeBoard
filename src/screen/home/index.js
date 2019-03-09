@@ -4,6 +4,8 @@ import {
   Text,
 } from 'react-native';
 
+import getUser from '../../redux/modules/user';
+
 import styles from './styles';
 
 class HomeScreen extends Component {
@@ -12,6 +14,10 @@ class HomeScreen extends Component {
     this.state = {
       //
     };
+  }
+
+  componentDidMount() {
+    getUser();
   }
 
   render() {

@@ -14,4 +14,5 @@ target 'SakeBoard' do
   # Explicitly include Yoga if you are using RN >= 0.42.0
   pod 'yoga', :path => "#{rn_path}/ReactCommon/yoga"
   pod 'Firebase/Core'
+  pod 'Firebase/Auth'
 end
