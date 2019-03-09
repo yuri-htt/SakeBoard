@@ -3,8 +3,10 @@ import {
   View,
   Text,
 } from 'react-native';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-import getUser from '../../redux/modules/user';
+import * as UserActions from '../../redux/modules/user';
 
 import styles from './styles';
 
@@ -17,7 +19,10 @@ class HomeScreen extends Component {
   }
 
   componentDidMount() {
-    getUser();
+    const {
+      actions,
+    } = this.props;
+    actions.getUser();
   }
 
   render() {
@@ -29,4 +34,12 @@ class HomeScreen extends Component {
   }
 }
 
-export default HomeScreen;
+const mapStatetoProps = (state, props) => ({ state, props });
+
+const mapDispatchToProps = dispatch => ({
+  actions: bindActionCreators({
+    ...UserActions,
+  }, dispatch),
+});
+
+export default connect(mapStatetoProps, mapDispatchToProps)(HomeScreen);
