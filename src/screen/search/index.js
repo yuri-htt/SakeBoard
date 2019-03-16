@@ -15,9 +15,11 @@ import styles from './styles';
 class SearchScreen extends Component {
   constructor(props) {
     super(props);
-    Voice.onSpeechPartialResults = this.onSpeechPartialResults;
+    Voice.onSpeechEnd = () => this.onSpeechEnd();
+    Voice.onSpeechPartialResults = e => this.onSpeechPartialResults(e);
 
     this.state = {
+      end: false,
       recording: false,
       partialResults: [],
     };
@@ -29,6 +31,7 @@ class SearchScreen extends Component {
 
   render() {
     const {
+      end,
       recording,
       partialResults,
     } = this.state;
@@ -42,7 +45,7 @@ class SearchScreen extends Component {
         <View style={styles.voiceContainer}>
           <View style={styles.cantering}>
             {this.state.partialResults.map(result => (
-              <Text key={result} ellipsizeMode="wordWrapping" style={styles.stat}>
+              <Text key={result} style={styles.stat}>
                 {result}
               </Text>
             ))}
@@ -67,7 +70,7 @@ class SearchScreen extends Component {
         </View>
 
         <View style={styles.buttonsContainer}>
-          {hasResults && !recording
+          {((hasResults && !recording) || end)
           && (
           <View>
 
@@ -103,14 +106,25 @@ class SearchScreen extends Component {
   }
 
   onPressClear() {
-    this.setState({ partialResults: [] });
+    this.setState({
+      end: false,
+      partialResults: [],
+    });
   }
 
-  onSpeechPartialResults = (e) => {
+  onSpeechEnd() {
     this.setState({
+      end: true,
+      recording: false,
+    });
+  }
+
+  onSpeechPartialResults(e) {
+    this.setState({
+      recording: false,
       partialResults: e.value,
     });
-  };
+  }
 }
 
 const mapStatetoProps = (state, props) => ({ state, props });
