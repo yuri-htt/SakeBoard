@@ -113,6 +113,7 @@ class SearchScreen extends Component {
   }
 
   onSpeechEnd() {
+    Voice.stop();
     this.setState({
       end: true,
       recording: false,
