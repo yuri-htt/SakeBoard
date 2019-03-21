@@ -8,12 +8,16 @@ import {
 import Voice from 'react-native-voice';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import algoliasearch from 'algoliasearch/reactnative';
 
 import images from '../../components/images';
 import styles from './styles';
 import CONFIG from '../../config';
+import console = require('console');
 
 const fetchUrl = 'https://labs.goo.ne.jp/api/hiragana';
+const algolia = algoliasearch(CONFIG.ALGOLIA_ID, CONFIG.ALGOLIA_ADMIN_KEY);
+
 class SearchScreen extends Component {
   constructor(props) {
     super(props);
@@ -112,6 +116,9 @@ class SearchScreen extends Component {
     const convertedData = await this.getConvertTxtToKana(partialResults);
     const changeDataToArray = RegExp(' ').test(convertedData.converted) ? convertedData.converted.split(' ') : [convertedData.converted];
     const makeUniqueArray = changeDataToArray.filter((x, i, self) => self.indexOf(x) === i);
+
+    const response = await this.getIndex(makeUniqueArray);
+    console.log(response)
   }
 
   onPressClear() {
@@ -148,6 +155,31 @@ class SearchScreen extends Component {
     }),
   }).then(response => response.json());
 
+  async getIndex(keyWords) {
+    const queries = [];
+    keyWords.forEach((keyWord) => {
+      queries.push({
+        indexName: 'masterSake',
+        query: keyWord,
+      });
+    });
+
+    return new Promise((resolve, reject) => {
+      algolia.search(queries, (err, content) => {
+        if (err) {
+          reject(err);
+          return;
+        }
+
+        const array = [];
+        content.results.forEach((result) => {
+          array.push(result.hits);
+        });
+
+        resolve(array);
+      });
+    });
+  }
 }
 
 const mapStatetoProps = (state, props) => ({ state, props });
