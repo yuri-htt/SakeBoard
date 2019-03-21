@@ -11,7 +11,9 @@ import { bindActionCreators } from 'redux';
 
 import images from '../../components/images';
 import styles from './styles';
+import CONFIG from '../../config';
 
+const fetchUrl = 'https://labs.goo.ne.jp/api/hiragana';
 class SearchScreen extends Component {
   constructor(props) {
     super(props);
@@ -101,8 +103,15 @@ class SearchScreen extends Component {
     Voice.stop();
   }
 
-  onPressSearch() {
-    // 検索処理
+  async onPressSearch() {
+    const {
+      partialResults,
+    } = this.state;
+
+    // 配列で検索キーを渡すとAPIからはスペース区切りで変換された値が返却される
+    const convertedData = await this.getConvertTxtToKana(partialResults);
+    const changeDataToArray = RegExp(' ').test(convertedData.converted) ? convertedData.converted.split(' ') : [convertedData.converted];
+    const makeUniqueArray = changeDataToArray.filter((x, i, self) => self.indexOf(x) === i);
   }
 
   onPressClear() {
@@ -126,6 +135,19 @@ class SearchScreen extends Component {
       partialResults: e.value,
     });
   }
+
+  getConvertTxtToKana = txtLists => fetch(fetchUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      app_id: CONFIG.GOO_API_KEY,
+      sentence: txtLists,
+      output_type: 'katakana',
+    }),
+  }).then(response => response.json());
+
 }
 
 const mapStatetoProps = (state, props) => ({ state, props });
