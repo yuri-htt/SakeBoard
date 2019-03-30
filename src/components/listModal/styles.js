@@ -53,6 +53,9 @@ const styles = StyleSheet.create({
   detailTxt: {
     color: '#A2A2A2',
   },
+  dismiss: {
+    marginTop: 32,
+  },
 });
 
 export default styles;

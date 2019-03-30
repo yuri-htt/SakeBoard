@@ -12,6 +12,7 @@ import {
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import Ionicon from 'react-native-vector-icons/Ionicons';
 import styles from './styles';
 import * as SearchActions from '../../redux/modules/search';
 import CategoryIcon from '../categoryIcon';
@@ -72,7 +73,15 @@ class ListModal extends Component {
             )
             }
 
+            {search.loaded
+            && (
+            <TouchableOpacity style={[styles.dismiss]} onPress={() => this.onPressDismiss()}>
+              <Ionicon name="ios-close-circle-outline" size={50} />
+            </TouchableOpacity>
+            )
+            }
           </View>
+
 
         </View>
       </Modal>
@@ -108,6 +117,13 @@ class ListModal extends Component {
 
   onPressCard() {
     // 選択したお酒を登録する画面へ遷移する
+  }
+
+  onPressDismiss() {
+    const {
+      actions,
+    } = this.props;
+    actions.setModal(false);
   }
 }
 
