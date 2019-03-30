@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
+import Ionicon from 'react-native-vector-icons/Ionicons';
 
 import styles from './styles';
 import HomeScreen from '../../screen/home';
@@ -61,23 +62,18 @@ const Nav = createBottomTabNavigator({
     screen: HomeStack,
     navigationOptions: {
       tabBarLabel: 'Home',
-      tabBarIcon: () => (<View style={styles.tabIcon} />),
+      tabBarIcon: () => (<Ionicon name="md-home" size={30} style={styles.icon} />),
     },
   },
   Search: {
     screen: SearchStack,
     navigationOptions: {
       tabBarLabel: 'Search',
-      tabBarIcon: () => (<View style={styles.tabIcon} />),
+      tabBarIcon: () => (<Ionicon name="md-search" size={30} style={styles.icon} />),
     },
   },
 }, {
   initialRouteName: 'Home',
-  activeTintColor: '#FFF',
-  shifting: true,
-  barStyle: {
-    backgroundColor: '#000',
-  },
 });
 
 export default BottomNav;
