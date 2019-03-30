@@ -25,11 +25,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   cantering: {
-    // flexDirection: 'row',
-    // height: 100,
     justifyContent: 'center',
-    // alignContent: 'center',
-    // alignItems: 'center',
   },
   mikeContainer: {
     marginTop: 32,

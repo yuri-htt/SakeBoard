@@ -8,15 +8,14 @@ import {
 import Voice from 'react-native-voice';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import algoliasearch from 'algoliasearch/reactnative';
 
 import images from '../../components/images';
 import styles from './styles';
 import CONFIG from '../../config';
-import console = require('console');
+import ListModal from '../../components/listModal';
+import * as SearchActions from '../../redux/modules/search';
 
 const fetchUrl = 'https://labs.goo.ne.jp/api/hiragana';
-const algolia = algoliasearch(CONFIG.ALGOLIA_ID, CONFIG.ALGOLIA_ADMIN_KEY);
 
 class SearchScreen extends Component {
   constructor(props) {
@@ -41,7 +40,16 @@ class SearchScreen extends Component {
       recording,
       partialResults,
     } = this.state;
-    const hasResults = partialResults.length > 0;
+    const {
+      search,
+    } = this.props.state;
+    const hasSpeechResults = partialResults.length > 0;
+
+    if (search.showModal) {
+      return (
+        <ListModal {...this.props} />
+      );
+    }
 
     return (
       <View style={styles.container}>
@@ -76,7 +84,7 @@ class SearchScreen extends Component {
         </View>
 
         <View style={styles.buttonsContainer}>
-          {((hasResults && !recording) || end)
+          {((hasSpeechResults && !recording) || end)
           && (
           <View>
 
@@ -108,17 +116,17 @@ class SearchScreen extends Component {
   }
 
   async onPressSearch() {
-    const {
-      partialResults,
-    } = this.state;
+    const { partialResults } = this.state;
+    const { actions } = this.props;
+
+    actions.setModal(true);
 
     // 配列で検索キーを渡すとAPIからはスペース区切りで変換された値が返却される
     const convertedData = await this.getConvertTxtToKana(partialResults);
     const changeDataToArray = RegExp(' ').test(convertedData.converted) ? convertedData.converted.split(' ') : [convertedData.converted];
     const makeUniqueArray = changeDataToArray.filter((x, i, self) => self.indexOf(x) === i);
 
-    const response = await this.getIndex(makeUniqueArray);
-    console.log(response)
+    actions.search(makeUniqueArray);
   }
 
   onPressClear() {
@@ -154,38 +162,14 @@ class SearchScreen extends Component {
       output_type: 'katakana',
     }),
   }).then(response => response.json());
-
-  async getIndex(keyWords) {
-    const queries = [];
-    keyWords.forEach((keyWord) => {
-      queries.push({
-        indexName: 'masterSake',
-        query: keyWord,
-      });
-    });
-
-    return new Promise((resolve, reject) => {
-      algolia.search(queries, (err, content) => {
-        if (err) {
-          reject(err);
-          return;
-        }
-
-        const array = [];
-        content.results.forEach((result) => {
-          array.push(result.hits);
-        });
-
-        resolve(array);
-      });
-    });
-  }
 }
 
 const mapStatetoProps = (state, props) => ({ state, props });
 
-const mapDispatchToProps = dispatch => (
-  bindActionCreators({}, dispatch)
-);
+const mapDispatchToProps = dispatch => ({
+  actions: bindActionCreators({
+    ...SearchActions,
+  }, dispatch),
+});
 
 export default connect(mapStatetoProps, mapDispatchToProps)(SearchScreen);

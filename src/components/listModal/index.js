@@ -41,7 +41,7 @@ class ListModal extends Component {
             {/* 検索中 */}
             {search.loading
             && (
-              <View style={[styles.modal, styles.center]}>
+              <View style={[styles.modal, styles.center, styles.flex]}>
                 <ActivityIndicator size="large" color="#FF9800" />
               </View>
             )
