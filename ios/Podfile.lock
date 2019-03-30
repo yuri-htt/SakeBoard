@@ -55,20 +55,25 @@ PODS:
     - nanopb/encode (= 0.3.8)
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
+  - React (0.58.4):
+    - React/Core (= 0.58.4)
   - React/Core (0.58.4):
     - yoga (= 0.58.4.React)
   - React/RCTLinkingIOS (0.58.4):
     - React/Core
+  - RNVectorIcons (6.4.2):
+    - React
   - yoga (0.58.4.React)
 
 DEPENDENCIES:
   - Firebase/Auth
   - Firebase/Core
   - React/RCTLinkingIOS (from `../node_modules/react-native`)
+  - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - Firebase
     - FirebaseAnalytics
     - FirebaseAuth
@@ -83,6 +88,8 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   React:
     :path: "../node_modules/react-native"
+  RNVectorIcons:
+    :path: "../node_modules/react-native-vector-icons"
   yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -98,8 +105,9 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 0c4baf0a73acd0041bf9f71ea018deedab5ea84e
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   React: 9b873b38b92ed8012d7cdf3b965477095ed364c4
+  RNVectorIcons: 8c52e1e8da1153613fdef44748e865c25556cb9c
   yoga: 0885622311729a02c2bc02dca97167787a51488b
 
-PODFILE CHECKSUM: c361e8eb1d8d2f930ef41762f627331d04d07d86
+PODFILE CHECKSUM: 774a91e113e4de4e84ff661e3b5e0ae48f8c0574
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.5.0

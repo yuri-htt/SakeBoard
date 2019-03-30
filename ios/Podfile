@@ -15,4 +15,6 @@ target 'SakeBoard' do
   pod 'yoga', :path => "#{rn_path}/ReactCommon/yoga"
   pod 'Firebase/Core'
   pod 'Firebase/Auth'
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
 end

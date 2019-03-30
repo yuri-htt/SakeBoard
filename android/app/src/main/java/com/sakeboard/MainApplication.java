@@ -3,6 +3,7 @@ package com.sakeboard;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.oblador.vectoricons.VectorIconsPackage;
 import com.wenkesj.voice.VoicePackage;
 import io.invertase.firebase.RNFirebasePackage;
 import io.invertase.firebase.auth.RNFirebaseAuthPackage;
@@ -26,6 +27,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+          new VectorIconsPackage(),
           new VoicePackage(),
           new RNFirebasePackage(),
           new RNFirebaseAuthPackage()
