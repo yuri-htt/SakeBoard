@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "algoliasearch": "^3.32.1",
+    "moment": "^2.24.0",
     "react": "16.6.3",
     "react-native": "0.58.4",
     "react-native-firebase": "^5.2.2",
