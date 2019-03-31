@@ -15,6 +15,7 @@ import { bindActionCreators } from 'redux';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import styles from './styles';
 import * as SearchActions from '../../redux/modules/search';
+import * as PostActions from '../../redux/modules/post';
 import CategoryIcon from '../categoryIcon';
 
 const { width } = Dimensions.get('window');
@@ -90,7 +91,7 @@ class ListModal extends Component {
 
   renderCandidateListCard(item) {
     return (
-      <TouchableOpacity onPress={() => this.onPressCard()} key={item.name} style={styles.cardContainer}>
+      <TouchableOpacity onPress={() => this.onPressCard(item)} key={item.name} style={styles.cardContainer}>
         <View style={[Platform.OS === 'ios' ? styles.candidateCardforiOS : styles.candidateCardforAndroid]}>
 
           <CategoryIcon categoryName={item.categoryName} style={styles.icon} />
@@ -115,8 +116,15 @@ class ListModal extends Component {
     );
   }
 
-  onPressCard() {
-    // 選択したお酒を登録する画面へ遷移する
+  onPressCard(item) {
+    const {
+      actions,
+      navigation,
+    } = this.props;
+
+    actions.setModal(false);
+    actions.select(item);
+    navigation.push('Add');
   }
 
   onPressDismiss() {
@@ -135,6 +143,7 @@ const mapStatetoProps = (state) => {
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators({
     ...SearchActions,
+    ...PostActions,
   }, dispatch),
 });
 
