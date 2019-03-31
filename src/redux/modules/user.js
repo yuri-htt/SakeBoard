@@ -1,5 +1,7 @@
 import firebase from 'react-native-firebase';
 
+import { getPosts } from './posts';
+
 const initialState = {
   loading: false,
   loaded: false,
@@ -27,6 +29,11 @@ export default (state = initialState, action) => {
         loading: false,
         loaded: true,
         error: payload.error,
+      };
+    case 'SET_USER_WITH_UID':
+      return {
+        ...state,
+        uid: payload.uid,
       };
     default:
       return state;
@@ -57,13 +64,30 @@ function setUserFail(err) {
   };
 }
 
+function setUserWithUid(uid) {
+  return {
+    type: 'SET_USER_WITH_UID',
+    payload: {
+      uid,
+    },
+  };
+}
+
 export const getUser = () => (dispatch) => {
   dispatch(setUser());
-  firebase.auth().signInAnonymously()
-    .then(() => {
-      dispatch(setUserSuccess(firebase.auth().currentUser.uid));
-    })
-    .catch((error) => {
-      dispatch(setUserFail(error));
-    });
+
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      dispatch(setUserWithUid(user.uid));
+      dispatch(getPosts());
+    } else {
+      firebase.auth().signInAnonymously()
+        .then(() => {
+          dispatch(setUserSuccess(firebase.auth().currentUser.uid));
+        })
+        .catch((error) => {
+          dispatch(setUserFail(error));
+        });
+    }
+  });
 };

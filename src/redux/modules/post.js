@@ -1,5 +1,7 @@
 import firebase from 'react-native-firebase';
 
+import { getPosts } from './posts';
+
 const initialState = {
   loading: false,
   loaded: false,
@@ -97,6 +99,7 @@ export const createPost = item => (dispatch, getState) => {
   postCollection.add(data)
     .then(() => {
       dispatch(createSuccess());
+      dispatch(getPosts());
     })
     .catch(e => createFail(e));
 };
