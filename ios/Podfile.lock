@@ -1,4 +1,10 @@
 PODS:
+  - BoringSSL-GRPC (0.0.2):
+    - BoringSSL-GRPC/Implementation (= 0.0.2)
+    - BoringSSL-GRPC/Interface (= 0.0.2)
+  - BoringSSL-GRPC/Implementation (0.0.2):
+    - BoringSSL-GRPC/Interface (= 0.0.2)
+  - BoringSSL-GRPC/Interface (0.0.2)
   - Firebase/Auth (5.8.0):
     - Firebase/CoreOnly
     - FirebaseAuth (= 5.0.4)
@@ -7,6 +13,9 @@ PODS:
     - FirebaseAnalytics (= 5.1.2)
   - Firebase/CoreOnly (5.8.0):
     - FirebaseCore (= 5.1.3)
+  - Firebase/Firestore (5.8.0):
+    - Firebase/CoreOnly
+    - FirebaseFirestore (= 0.13.3)
   - FirebaseAnalytics (5.1.2):
     - FirebaseCore (~> 5.1)
     - FirebaseInstanceID (~> 3.2)
@@ -24,6 +33,23 @@ PODS:
   - FirebaseAuthInterop (1.0.0)
   - FirebaseCore (5.1.3):
     - GoogleUtilities/Logger (~> 5.2)
+  - FirebaseFirestore (0.13.3):
+    - FirebaseAuthInterop (~> 1.0)
+    - FirebaseCore (~> 5.0)
+    - FirebaseFirestore/abseil-cpp (= 0.13.3)
+    - "gRPC-C++ (~> 0.0.3)"
+    - gRPC-ProtoRPC (~> 1.0)
+    - leveldb-library (~> 1.20)
+    - nanopb (~> 0.3.8)
+    - Protobuf (~> 3.1)
+  - FirebaseFirestore/abseil-cpp (0.13.3):
+    - FirebaseAuthInterop (~> 1.0)
+    - FirebaseCore (~> 5.0)
+    - "gRPC-C++ (~> 0.0.3)"
+    - gRPC-ProtoRPC (~> 1.0)
+    - leveldb-library (~> 1.20)
+    - nanopb (~> 0.3.8)
+    - Protobuf (~> 3.1)
   - FirebaseInstanceID (3.2.1):
     - FirebaseCore (~> 5.1)
     - GoogleUtilities/Environment (~> 5.2)
@@ -49,12 +75,43 @@ PODS:
   - "GoogleUtilities/NSData+zlib (5.2.3)"
   - GoogleUtilities/Reachability (5.2.3):
     - GoogleUtilities/Logger
+  - gRPC (1.18.0):
+    - gRPC-RxLibrary (= 1.18.0)
+    - gRPC/Main (= 1.18.0)
+  - "gRPC-C++ (0.0.7)":
+    - "gRPC-C++/Implementation (= 0.0.7)"
+    - "gRPC-C++/Interface (= 0.0.7)"
+  - "gRPC-C++/Implementation (0.0.7)":
+    - "gRPC-C++/Interface (= 0.0.7)"
+    - gRPC-Core (= 1.18.0)
+    - nanopb (~> 0.3)
+  - "gRPC-C++/Interface (0.0.7)"
+  - gRPC-Core (1.18.0):
+    - gRPC-Core/Implementation (= 1.18.0)
+    - gRPC-Core/Interface (= 1.18.0)
+  - gRPC-Core/Implementation (1.18.0):
+    - BoringSSL-GRPC (= 0.0.2)
+    - gRPC-Core/Interface (= 1.18.0)
+    - nanopb (~> 0.3)
+  - gRPC-Core/Interface (1.18.0)
+  - gRPC-ProtoRPC (1.18.0):
+    - gRPC-ProtoRPC/Main (= 1.18.0)
+  - gRPC-ProtoRPC/Main (1.18.0):
+    - gRPC (= 1.18.0)
+    - gRPC-RxLibrary (= 1.18.0)
+    - Protobuf (~> 3.0)
+  - gRPC-RxLibrary (1.18.0)
+  - gRPC/Main (1.18.0):
+    - gRPC-Core (= 1.18.0)
+    - gRPC-RxLibrary (= 1.18.0)
   - GTMSessionFetcher/Core (1.2.0)
+  - leveldb-library (1.20)
   - nanopb (0.3.8):
     - nanopb/decode (= 0.3.8)
     - nanopb/encode (= 0.3.8)
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
+  - Protobuf (3.6.1)
   - React (0.58.4):
     - React/Core (= 0.58.4)
   - React/Core (0.58.4):
@@ -68,22 +125,32 @@ PODS:
 DEPENDENCIES:
   - Firebase/Auth
   - Firebase/Core
+  - Firebase/Firestore
   - React/RCTLinkingIOS (from `../node_modules/react-native`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
+    - BoringSSL-GRPC
     - Firebase
     - FirebaseAnalytics
     - FirebaseAuth
     - FirebaseAuthInterop
     - FirebaseCore
+    - FirebaseFirestore
     - FirebaseInstanceID
     - GoogleAppMeasurement
     - GoogleUtilities
+    - gRPC
+    - "gRPC-C++"
+    - gRPC-Core
+    - gRPC-ProtoRPC
+    - gRPC-RxLibrary
     - GTMSessionFetcher
+    - leveldb-library
     - nanopb
+    - Protobuf
 
 EXTERNAL SOURCES:
   React:
@@ -94,20 +161,29 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
+  BoringSSL-GRPC: 2a230d9cd93e7ce39916044f645cebb31f37dde6
   Firebase: 25812f43e7a53b11ae2f0a5f4c6d12faeb1f7cd7
   FirebaseAnalytics: df15839e9c6ca6bd14d2e8ab6b0c672e6c49097e
   FirebaseAuth: 504b198ceb3472dca5c65bb95544ea44cfc9439e
   FirebaseAuthInterop: 0ffa57668be100582bb7643d4fcb7615496c41fc
   FirebaseCore: 27bd80e5bfaaf9552a1f5cacb4c7e8bb925bab22
+  FirebaseFirestore: c9ec5660228f97ed10782d72b0498449af07256d
   FirebaseInstanceID: ea5af6920d0a4a29b40459d055bebe4a6c1333c4
   GoogleAppMeasurement: fc4a4c3fe0144db9313cbf443ffe62e6b1d6268c
   GoogleUtilities: 6f681e27050c5e130325e89fa0316dfca826f954
+  gRPC: f0d45d7bfd5f220e405df5a9f672315ab963440c
+  "gRPC-C++": d9b80445085d66f4d7fc577e35be7573c4b24d2a
+  gRPC-Core: 901572a0099a453a79eb58bdb29e381ede0787bd
+  gRPC-ProtoRPC: 8e49c501c166d221cf9e44076b20580171f8ecd0
+  gRPC-RxLibrary: bf23bc3bfde06674a794bb63f458f8d67d4038bb
   GTMSessionFetcher: 0c4baf0a73acd0041bf9f71ea018deedab5ea84e
+  leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
+  Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
   React: 9b873b38b92ed8012d7cdf3b965477095ed364c4
   RNVectorIcons: 8c52e1e8da1153613fdef44748e865c25556cb9c
   yoga: 0885622311729a02c2bc02dca97167787a51488b
 
-PODFILE CHECKSUM: 774a91e113e4de4e84ff661e3b5e0ae48f8c0574
+PODFILE CHECKSUM: caeac125d2ad6481a8a9700decdc8b1c0921ed6d
 
 COCOAPODS: 1.5.0
