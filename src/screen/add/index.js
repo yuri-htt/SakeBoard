@@ -13,6 +13,7 @@ import { bindActionCreators } from 'redux';
 
 import CategoryIcon from '../../components/categoryIcon';
 import styles from './styles';
+import * as PostActions from '../../redux/modules/post';
 
 class AddScreen extends Component {
   constructor(props) {
@@ -92,7 +93,7 @@ class AddScreen extends Component {
               placeholder="お酒の感想を記載しましょう"
               textAlignVertical="top"
               value={text}
-              onChangeText={this.onChangeText}
+              onChangeText={text => this.onChangeText(text)}
             />
           </View>
 
@@ -123,7 +124,26 @@ class AddScreen extends Component {
   }
 
   onPressSave() {
-    // 保存処理
+    const {
+      starCount,
+      text,
+    } = this.state;
+
+    const {
+      actions,
+      navigation,
+    } = this.props;
+
+    Keyboard.dismiss();
+
+    const evaluation = {
+      starCount,
+      text,
+    };
+
+    actions.createPost(evaluation);
+    navigation.pop();
+    navigation.navigate('Home');
   }
 
   onPressCancel() {
@@ -137,8 +157,10 @@ const mapStatetoProps = (state) => {
   return { post };
 };
 
-const mapDispatchToProps = dispatch => (
-  bindActionCreators({}, dispatch)
-);
+const mapDispatchToProps = dispatch => ({
+  actions: bindActionCreators({
+    ...PostActions,
+  }, dispatch),
+});
 
 export default connect(mapStatetoProps, mapDispatchToProps)(AddScreen);
