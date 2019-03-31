@@ -130,6 +130,7 @@ class SearchScreen extends Component {
   }
 
   onPressClear() {
+    Voice.destroy();
     this.setState({
       end: false,
       partialResults: [],
